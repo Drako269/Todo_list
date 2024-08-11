@@ -44,9 +44,32 @@ if (isset($_POST['guardar'])) {
     }
 }
 
+// Consultamos la base de datos para mostrar los datos
+$query = "SELECT * FROM tareas";
+$result = $conn->query($query);
+
+// Mostramos los datos en una tabla HTML
+if ($result->num_rows > 0) {
+    echo "<table border='1'>";
+    echo "<tr><th>ID</th><th>Nombre</th><th>Fecha Inicial</th><th>Fecha Final</th><th>Descripción</th></tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["id"] . "</td>";
+        echo "<td>" . $row["nombre"] . "</td>";
+        echo "<td>" . $row["fecha_inicio"] . "</td>";
+        echo "<td>" . $row["fecha_tarea"] . "</td>";
+        echo "<td>" . $row["descripcion"] . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "No hay datos para mostrar.";
+}
+
 // Cerramos la conexión
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
