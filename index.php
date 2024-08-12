@@ -28,7 +28,7 @@ $conn->query($query);
 // Procesa el formulario
 if (isset($_POST['guardar'])) {
     $nombre = $_POST['nombre'];
-    $fecha_inicio = $_POST['fecha_inicio'];
+    $fecha_inicio = date("Y-m-d");
     $fecha_tarea = $_POST['fecha_tarea'];
     $descripcion = $_POST['descripcion'];
 
@@ -51,7 +51,7 @@ $result = $conn->query($query);
 // Mostramos los datos en una tabla HTML
 if ($result->num_rows > 0) {
     echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Nombre</th><th>Fecha Inicial</th><th>Fecha Final</th><th>Descripción</th></tr>";
+    echo "<tr><th>ID</th><th>Nombre</th><th>Fecha de Creacion</th><th>Fecha Limite</th><th>Descripción</th></tr>";
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>" . $row["id"] . "</td>";
@@ -82,9 +82,7 @@ $conn->close();
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
   <label for="nombre">Nombre:</label>
   <input type="text" id="nombre" name="nombre"><br><br>
-  <label for="fecha_inicio">Fecha Inicial:</label>
-  <input type="date" id="fecha_inicio" name="fecha_inicio"><br><br>
-  <label for="fecha_tarea">Fecha Final:</label>
+  <label for="fecha_tarea">Fecha Limite:</label>
   <input type="date" id="fecha_tarea" name="fecha_tarea"><br><br>
   <label for="descripcion">Descripción:</label>
   <textarea id="descripcion" name="descripcion"></textarea><br><br>
