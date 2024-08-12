@@ -38,9 +38,9 @@ if (isset($_POST['guardar'])) {
         $query = "INSERT INTO tareas (nombre, fecha_inicio, fecha_tarea, descripcion)
                   VALUES ('$nombre', '$fecha_inicio', '$fecha_tarea', '$descripcion')";
         $conn->query($query);
-        echo "Datos guardados con éxito!";
+        echo "<script>alert('Datos guardados con éxito!');</script>";
     } else {
-        echo "Por favor, complete todos los campos.";
+        echo "<script>alert('Por favor, complete todos los campos.');</script>";
     }
 }
 
@@ -49,22 +49,7 @@ $query = "SELECT * FROM tareas";
 $result = $conn->query($query);
 
 // Mostramos los datos en una tabla HTML
-if ($result->num_rows > 0) {
-    echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Nombre</th><th>Fecha de Creacion</th><th>Fecha Limite</th><th>Descripción</th></tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row["id"] . "</td>";
-        echo "<td>" . $row["nombre"] . "</td>";
-        echo "<td>" . $row["fecha_inicio"] . "</td>";
-        echo "<td>" . $row["fecha_tarea"] . "</td>";
-        echo "<td>" . $row["descripcion"] . "</td>";
-        echo "</tr>";
-    }
-    echo "</table>";
-} else {
-    echo "No hay datos para mostrar.";
-}
+
 
 // Cerramos la conexión
 $conn->close();
@@ -76,17 +61,46 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To do List</title>
+    <style>
+    #formulario {
+      float: right;
+    }
+    #cuadro {
+      float: left;
+    }
+  </style>
 </head>
 <body>
     <!-- Formulario para ingresar datos -->
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-  <label for="nombre">Nombre:</label>
-  <input type="text" id="nombre" name="nombre"><br><br>
-  <label for="fecha_tarea">Fecha Limite:</label>
-  <input type="date" id="fecha_tarea" name="fecha_tarea"><br><br>
-  <label for="descripcion">Descripción:</label>
-  <textarea id="descripcion" name="descripcion"></textarea><br><br>
-  <input type="submit" name="guardar" value="Guardar">
-</form>
+<div id="formulario">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre"><br><br>
+        <label for="fecha_tarea">Fecha Limite:</label>
+        <input type="date" id="fecha_tarea" name="fecha_tarea"><br><br>
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion"></textarea><br><br>
+        <input type="submit" name="guardar" value="Guardar">
+    </form>
+</div>
+<div id="cuadro">
+<?php
+    if ($result->num_rows > 0) {
+        echo "<table border='1'>";
+        echo "<th>Nombre</th><th>Fecha de Creacion</th><th>Fecha Limite</th><th>Descripción</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row["nombre"] . "</td>";
+            echo "<td>" . $row["fecha_inicio"] . "</td>";
+            echo "<td>" . $row["fecha_tarea"] . "</td>";
+            echo "<td>" . $row["descripcion"] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No hay datos para mostrar.";
+    }
+?>
+</div>
 </body>
 </html>
