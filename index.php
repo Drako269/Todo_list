@@ -33,7 +33,7 @@ if (isset($_POST['guardar'])) {
     $descripcion = $_POST['descripcion'];
 
     // Verificamos si los datos están vacíos
-    if (!empty($nombre) && !empty($fecha_inicio) && !empty($fecha_tarea) && !empty($descripcion)) {
+    if (!empty($nombre) && !empty($fecha_tarea) && !empty($descripcion)) {
         // Insertamos los datos en la tabla
         $query = "INSERT INTO tareas (nombre, fecha_inicio, fecha_tarea, descripcion)
                   VALUES ('$nombre', '$fecha_inicio', '$fecha_tarea', '$descripcion')";
@@ -47,9 +47,6 @@ if (isset($_POST['guardar'])) {
 // Consultamos la base de datos para mostrar los datos
 $query = "SELECT * FROM tareas";
 $result = $conn->query($query);
-
-// Mostramos los datos en una tabla HTML
-
 
 // Cerramos la conexión
 $conn->close();
